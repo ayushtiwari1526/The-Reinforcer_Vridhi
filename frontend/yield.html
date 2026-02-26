@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop AI | Precision Prediction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .glass-container {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(30px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+        }
+        .crop-option {
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid transparent;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .crop-option.selected {
+            border-color: #22c55e;
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="p-6 lg:p-12 flex items-center justify-center">
+
+    <div class="glass-container w-full max-w-[1400px] h-[88vh] flex overflow-hidden shadow-2xl">
+        
+        <aside class="w-64 border-r border-white/20 p-8 flex flex-col hidden xl:flex">
+            <div class="text-2xl font-black text-green-900 mb-12 flex items-center gap-2">
+                <i class="fa-solid fa-microchip text-green-600"></i> Vridhi
+            </div>
+            <nav class="flex-1 space-y-4">
+                <a href="index.html" class="flex items-center gap-4 px-6 py-4 rounded-2xl text-slate-600 hover:bg-white/40 transition">
+                    <i class="fa-solid fa-grid-2"></i> Dashboard
+                </a>
+                <a href="#" class="flex items-center gap-4 px-6 py-4 rounded-2xl bg-white/60 font-black text-slate-900 shadow-sm">
+                    <i class="fa-solid fa-chart-line"></i> Prediction
+                </a>
+            </nav>
+            <div class="mt-auto p-4 bg-white/20 rounded-3xl border border-white/40">
+                <p class="text-[10px] font-black text-green-800 uppercase">Lucknow, UP</p>
+                <p class="text-xs font-bold text-slate-700">Ayush Tiwari</p>
+            </div>
+        </aside>
+
+        <main class="flex-1 p-10 flex flex-col">
+            <header class="flex justify-between items-start mb-10">
+                <div>
+                    <h1 class="text-4xl font-black text-slate-900">Yield Prediction Hub</h1>
+                    <p class="text-slate-600 font-bold uppercase text-[10px] tracking-widest mt-1">Ensemble ML Regression Engine</p>
+                </div>
+                <select id="langChoice" class="bg-white/40 border-none rounded-xl px-4 py-2 font-bold outline-none backdrop-blur-md">
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="bh">भोजपुरी</option>
+                </select>
+            </header>
+
+            <div class="grid grid-cols-12 gap-10">
+                <div class="col-span-12 lg:col-span-8 space-y-8">
+                    <div>
+                        <h2 class="text-xl font-black text-slate-800 mb-6">Step 1: Choose Crop</h2>
+                        <div class="grid grid-cols-3 gap-6" id="cropSelector">
+                            <div onclick="selectCrop('Wheat', this)" class="crop-option p-4 rounded-3xl text-center border-green-500 selected">
+                                <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=400" class="rounded-2xl h-32 w-full object-cover mb-2">
+                                <span class="font-bold">Wheat 🌱</span>
+                            </div>
+                            <div onclick="selectCrop('Rice', this)" class="crop-option p-4 rounded-3xl text-center">
+                                <img src="https://images.unsplash.com/photo-1536633100656-7866380a0680?auto=format&fit=crop&w=400" class="rounded-2xl h-32 w-full object-cover mb-2">
+                                <span class="font-bold">Rice 🌾</span>
+                            </div>
+                            <div onclick="selectCrop('Maize', this)" class="crop-option p-4 rounded-3xl text-center">
+                                <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=400" class="rounded-2xl h-32 w-full object-cover mb-2">
+                                <span class="font-bold">Maize 🌽</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/30 p-8 rounded-[40px] border border-white/40 flex items-center justify-between">
+                        <div class="flex-1">
+                            <h4 class="font-black text-slate-800 mb-2">Land Size (Acre)</h4>
+                            <input type="number" id="landSizeInput" placeholder="Enter acres (e.g. 2)" class="w-full bg-white/40 border-none rounded-xl px-6 py-3 font-bold outline-none">
+                        </div>
+                        <button onclick="runPrediction()" class="ml-6 bg-slate-900 text-white px-10 py-4 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-green-700 transition">PREDICT</button>
+                    </div>
+                </div>
+
+                <div class="col-span-12 lg:col-span-4 bg-white/20 rounded-[40px] p-8 border border-white/40">
+                    <h3 class="text-xl font-black text-slate-800 mb-8">Results Preview</h3>
+                    <div class="space-y-6">
+                        <div class="p-6 bg-white/40 rounded-3xl border border-white/20">
+                            <p class="text-[10px] font-black text-slate-400 uppercase">Est. Yield ✅</p>
+                            <h4 class="text-3xl font-black" id="resYield">0.0 qtl</h4>
+                        </div>
+                        <div class="p-6 bg-green-500/10 rounded-3xl border border-green-500/20">
+                            <p class="text-[10px] font-black text-slate-400 uppercase">Exp. Profit 💰</p>
+                            <h4 class="text-3xl font-black text-green-700" id="resProfit">₹0</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let selectedCrop = 'Wheat';
+        const cropRates = { 'Wheat': 2450, 'Rice': 2183, 'Maize': 2090 };
+
+        function selectCrop(crop, element) {
+            selectedCrop = crop;
+            document.querySelectorAll('.crop-option').forEach(el => el.classList.remove('selected', 'border-green-500'));
+            element.classList.add('selected', 'border-green-500');
+        }
+
+        function runPrediction() {
+            const size = parseFloat(document.getElementById('landSizeInput').value);
+            
+            if (isNaN(size) || size <= 0) {
+                alert("Land size enter kariye!");
+                return;
+            }
+
+            // Ensemble ML Logic Simulation
+            const estYield = (size * 12.5).toFixed(1); 
+            const expProfit = Math.round(estYield * cropRates[selectedCrop] * 0.45); 
+
+            // Update UI
+            document.getElementById('resYield').innerText = `${estYield} qtl`;
+            document.getElementById('resProfit').innerText = `₹${expProfit.toLocaleString()}`;
+
+            // Multi-lingual Voice Feedback
+            const lang = document.getElementById('langChoice').value;
+            let speakText = "";
+            
+            if (lang === 'hi') {
+                speakText = `${size} एकड़ ${selectedCrop} के लिए अनुमानित उपज ${estYield} क्विंटल और मुनाफा ${expProfit} रुपये है।`;
+            } else if (lang === 'bh') {
+                speakText = `${size} एकड़ ${selectedCrop} खातिर पैदावार ${estYield} कुंतल और मुनाफा ${expProfit} रुपया होई।`;
+            } else {
+                speakText = `Predicted yield for ${size} acres of ${selectedCrop} is ${estYield} quintals with a profit of ${expProfit} rupees.`;
+            }
+
+            const msg = new SpeechSynthesisUtterance(speakText);
+            msg.lang = (lang === 'en') ? 'en-IN' : 'hi-IN';
+            window.speechSynthesis.speak(msg);
+        }
+    </script>
+</body>
+</html>

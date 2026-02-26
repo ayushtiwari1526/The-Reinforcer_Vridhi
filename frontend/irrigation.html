@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Irrigation Planner | Vridhi</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body {
+    font-family: 'Outfit', sans-serif;
+    background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+    background-size: cover;
+}
+.glass {
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(25px);
+    border-radius: 40px;
+}
+.card {
+    background: rgba(255,255,255,0.4);
+    border-radius: 25px;
+}
+.glass-panel {
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(30px);
+    border-radius: 30px;
+}
+</style>
+</head>
+
+<body class="p-6">
+
+<!-- MAIN WRAPPER -->
+<div class="glass-panel w-full max-w-[1600px] h-[94vh] flex overflow-hidden shadow-2xl mx-auto">
+
+    <!-- SIDEBAR -->
+    <aside class="w-72 border-r border-white/20 p-8 flex flex-col hidden xl:flex">
+            <div class="text-3xl font-black text-green-900 mb-12 flex items-center gap-3">
+                <i class="fa-solid fa-microchip text-green-600"></i> Vridhi
+            </div>
+            <nav class="flex-1 space-y-4">
+                <a id="nav-dash" href="#" class="flex items-center gap-4 px-6 py-4 rounded-2xl bg-white/70 font-bold text-slate-800 shadow-sm"><i class="fa-solid fa-grid-2"></i> Dashboard</a>
+                <!-- SERVICES DROPDOWN -->
+<div class="relative">
+
+    <button onclick="toggleServices()" 
+    class="w-full flex items-center justify-between px-6 py-4 rounded-2xl text-slate-600 hover:bg-white/30 transition font-bold">
+
+        <div class="flex items-center gap-4">
+            <i class="fa-solid fa-layer-group"></i>
+            Services
+        </div>
+
+        <i id="arrowIcon" class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+    </button>
+
+    <!-- Dropdown -->
+    <div id="servicesMenu" 
+    class="hidden ml-6 mt-2 space-y-2 transition-all duration-300">
+
+        <a href="yield.html" 
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-600 hover:bg-white/40 transition">
+            📊 Prediction
+        </a>
+
+        <a href="irrigation.html" 
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-600 hover:bg-white/40 transition">
+            💧 Planner
+        </a>
+
+        <a href="fertilizer.html" 
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-600 hover:bg-white/40 transition">
+            🌿 Fertilizer
+        </a>
+
+        <a href="guide.html" 
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-600 hover:bg-white/40 transition">
+            📘 Guide
+        </a>
+
+    </div>
+</div>
+                <a href="ai-hub.html" class="flex items-center gap-4 px-6 py-4 rounded-2xl text-slate-600 hover:bg-green-600 hover:text-white transition-all font-bold">
+                    <i class="fa-solid fa-brain"></i> <span>AI Precision Hub</span>
+                </a>
+                <div onclick="window.location.href='market.html'" class="bg-slate-900 text-white px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center gap-2 shadow-xl cursor-pointer hover:bg-green-700 transition">
+                    <i class="fa-solid fa-shop"></i> Go to Market
+                </div>
+
+            
+            </nav>
+
+            <div class="mt-auto space-y-4">
+                <div class="bg-white/40 p-5 rounded-[30px] border border-white/40">
+                    <p class="text-[10px] font-black text-green-800 uppercase mb-1">Lucknow, UP</p>
+                    <p class="text-sm font-bold text-slate-800 user-name">User</p>
+                </div>
+                <button onclick="logoutUser()" class="w-full py-4 bg-red-500 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-red-600 transition shadow-lg shadow-red-200">
+                    <i class="fa-solid fa-power-off mr-2"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 overflow-y-auto p-8">
+
+        <div class="glass p-8 max-w-6xl mx-auto shadow-2xl">
+
+            <!-- HEADER -->
+            <div class="mb-6">
+                <h1 class="text-4xl font-black text-green-800">
+                    💧 Irrigation Intelligence System
+                </h1>
+                <p class="text-slate-600 mt-2">
+                    Smart irrigation planning for better crop growth and water conservation
+                </p>
+            </div>
+
+            <!-- INPUT -->
+            <div class="grid md:grid-cols-3 gap-4 mb-6">
+
+                <select id="crop" class="p-3 rounded-xl bg-white/60">
+                    <option value="wheat">🌾 Wheat</option>
+                    <option value="rice">🌾 Rice</option>
+                    <option value="maize">🌽 Maize</option>
+                </select>
+
+                <input id="area" type="number" placeholder="Area (acre)" class="p-3 rounded-xl bg-white/60">
+
+                <select id="soil" class="p-3 rounded-xl bg-white/60">
+                    <option value="low">Dry Soil</option>
+                    <option value="medium">Medium Soil</option>
+                    <option value="high">Wet Soil</option>
+                </select>
+
+            </div>
+
+            <!-- BUTTON -->
+            <button onclick="getPlan()" 
+            class="bg-green-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-700">
+                Get Irrigation Plan 🚀
+            </button>
+
+            <!-- RESULT -->
+            <div id="result" class="mt-6 p-6 card text-lg font-bold text-slate-800"></div>
+
+            <!-- WEEKLY -->
+            <div class="mt-8 card p-6">
+                <h2 class="font-black mb-4 text-xl">📅 Weekly Plan</h2>
+                <div id="weekly" class="grid grid-cols-7 gap-2 text-center text-sm"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- JS -->
+<script>
+
+function toggleServices() {
+    let menu = document.getElementById("servicesMenu");
+    let arrow = document.getElementById("arrowIcon");
+
+    menu.classList.toggle("hidden");
+    arrow.classList.toggle("rotate-180");
+}
+
+async function getPlan() {
+
+    let crop = document.getElementById("crop").value;
+    let area = document.getElementById("area").value;
+    let soil = document.getElementById("soil").value;
+
+    if(area === "") {
+        alert("Area daalo bhai");
+        return;
+    }
+
+    let res = await fetch("http://127.0.0.1:8000/api/weather?lat=26.84&lon=80.94");
+    let weather = await res.json();
+
+    let temp = weather.temperature;
+    let humidity = weather.humidity;
+
+    let irrigation = "NO";
+    let water = 0;
+    let reason = "";
+
+    if (soil === "low" && humidity < 50) {
+        irrigation = "YES";
+        water = area * 1200;
+        reason = "Soil dry + humidity low";
+    }
+    else if (temp > 32) {
+        irrigation = "YES";
+        water = area * 1500;
+        reason = "High temperature";
+    }
+    else {
+        irrigation = "NO";
+        reason = "Enough moisture";
+    }
+
+    document.getElementById("result").innerHTML = `
+        💧 Irrigation Needed: <span class="text-green-700">${irrigation}</span><br>
+        🌡 Temperature: ${temp}°C<br>
+        💦 Humidity: ${humidity}%<br>
+        🚿 Water Required: ${water} Liters/day<br>
+        📌 Reason: ${reason}
+    `;
+
+    let days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+    let weeklyHTML = "";
+
+    days.forEach(day => {
+        let need = Math.random() > 0.5 ? "✔" : "✖";
+        let color = need === "✔" ? "bg-green-300" : "bg-gray-200";
+
+        weeklyHTML += `<div class="${color} p-2 rounded">${day}<br>${need}</div>`;
+    });
+
+    document.getElementById("weekly").innerHTML = weeklyHTML;
+}
+
+</script>
+
+</body>
+</html>

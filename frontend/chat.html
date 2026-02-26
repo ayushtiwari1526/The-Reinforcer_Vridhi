@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop AI | Smart Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .glass-panel { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(25px) saturate(180%); border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.3); }
+        .chat-box-area { background: rgba(255, 255, 255, 0.3); border-radius: 32px; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .message-bot { background: rgba(255, 255, 255, 0.8); color: #1e293b; border-radius: 20px 20px 20px 0; }
+        .message-user { background: #166534; color: white; border-radius: 20px 20px 0 20px; }
+        /* Custom Scrollbar */
+        .chat-scroll::-webkit-scrollbar { width: 5px; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: rgba(22, 101, 52, 0.5); border-radius: 10px; }
+    </style>
+</head>
+<body class="p-4 lg:p-8 flex items-center justify-center">
+
+    <div class="glass-panel w-full max-w-[1600px] h-[94vh] flex overflow-hidden shadow-2xl">
+        
+        <aside class="w-72 border-r border-white/20 p-8 flex flex-col hidden xl:flex">
+            <div class="text-3xl font-black text-green-900 mb-12 flex items-center gap-3">
+                <i class="fa-solid fa-microchip text-green-600"></i> Vridhi
+            </div>
+            <nav class="flex-1 space-y-4">
+                <a href="index.html" class="flex items-center gap-4 px-6 py-4 rounded-2xl text-slate-600 hover:bg-white/30 transition font-bold">
+                    <i class="fa-solid fa-grid-2"></i> Dashboard
+                </a>
+                <a href="yield.html" class="flex items-center gap-4 px-6 py-4 rounded-2xl text-slate-600 hover:bg-white/30 transition font-bold">
+                    <i class="fa-solid fa-chart-line"></i> Prediction
+                </a>
+                <a href="#" class="flex items-center gap-4 px-6 py-4 rounded-2xl bg-white/70 font-black text-slate-800 shadow-sm">
+                    <i class="fa-solid fa-comment-dots"></i> AI Assistant
+                </a>
+            </nav>
+            <div class="mt-auto bg-white/40 p-5 rounded-[30px] border border-white/40">
+                <p class="text-[10px] font-black text-green-800 uppercase mb-1">Lucknow, UP</p>
+                <p class="text-sm font-bold text-slate-800">Ayush Tiwari</p>
+                <p class="text-[10px] text-green-700 font-black">PF Balance: ₹3,928</p>
+            </div>
+        </aside>
+
+        <main class="flex-1 p-10 flex flex-col space-y-6">
+            
+            <header class="flex justify-between items-center bg-white/30 p-4 rounded-[30px] border border-white/40 backdrop-blur-md">
+                <div class="flex items-center gap-4">
+                    <h1 class="text-2xl font-black text-slate-800">AI Farming Assistant</h1>
+                    <div class="h-6 w-[1px] bg-slate-400 opacity-30"></div>
+                    <span class="text-[10px] font-black text-green-700 uppercase tracking-widest">Live Support</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs font-black text-slate-800">Ayush Tiwari</p>
+                        <p class="text-[8px] text-green-600 font-bold uppercase">Active Now</p>
+                    </div>
+                    <img src="https://i.pravatar.cc/150?u=ayush" class="w-10 h-10 rounded-xl border-2 border-white">
+                </div>
+            </header>
+
+            <div class="flex-1 flex flex-col chat-box-area overflow-hidden">
+                <div id="chatBox" class="flex-1 overflow-y-auto p-8 space-y-6 chat-scroll">
+                    <div class="flex flex-col gap-1 items-start">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase ml-2">Assistant</span>
+                        <div class="message-bot p-4 shadow-sm text-sm font-bold max-w-[70%]">
+                            Pranam Ayush! Lucknow ke mausam aur kheti ke baare mein aap kya jaanna chahte hain?
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-white/30 border-t border-white/20 flex gap-4 items-center">
+                    <button class="w-12 h-12 bg-white rounded-2xl text-green-600 shadow-sm hover:scale-105 transition">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                    <input type="text" id="userInput" placeholder="Apna sawal yahan likhein..." 
+                        class="flex-1 bg-white/80 border-none rounded-2xl px-6 py-4 text-sm font-bold outline-none shadow-inner">
+                    <button onclick="sendMessage()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-green-700 transition shadow-lg">
+                        Send <i class="fa-solid fa-paper-plane ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            let input = document.getElementById("userInput");
+            let msg = input.value.trim();
+            if (!msg) return;
+
+            let chatBox = document.getElementById("chatBox");
+
+            // User Message UI
+            chatBox.innerHTML += `
+                <div class="flex flex-col gap-1 items-end">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase mr-2">You</span>
+                    <div class="message-user p-4 shadow-md text-sm font-bold max-w-[70%]">
+                        ${msg}
+                    </div>
+                </div>`;
+
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Typing Indicator
+            let typingId = "typing-" + Date.now();
+            chatBox.innerHTML += `
+                <div class="flex flex-col gap-1 items-start" id="${typingId}">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase ml-2">Assistant</span>
+                    <div class="message-bot p-4 shadow-sm text-sm font-bold italic text-slate-400">
+                        Thinking...
+                    </div>
+                </div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                // Connecting to your FastAPI Backend
+                let res = await fetch("http://127.0.0.1:8000/chat?q=" + encodeURIComponent(msg));
+                let data = await res.json();
+
+                document.getElementById(typingId).remove();
+
+                chatBox.innerHTML += `
+                    <div class="flex flex-col gap-1 items-start">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase ml-2">Assistant</span>
+                        <div class="message-bot p-4 shadow-sm text-sm font-bold max-w-[70%]">
+                            ${data.reply}
+                        </div>
+                    </div>`;
+
+            } catch (e) {
+                document.getElementById(typingId).remove();
+                chatBox.innerHTML += `<div class="flex justify-center"><span class="text-[10px] font-black text-red-500 uppercase">⚠ Connection Error</span></div>`;
+            }
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Allow Enter key to send
+        document.getElementById("userInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") sendMessage();
+        });
+    </script>
+</body>
+</html>

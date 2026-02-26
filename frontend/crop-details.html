@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vridhi | Detailed Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+        body { font-family: 'Outfit', sans-serif; background-color: #0f172a; color: white; }
+        .timeline::before { content: ''; position: absolute; left: 50%; width: 2px; height: 100%; background: #22c55e; transform: translateX(-50%); }
+        .step-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body class="p-10">
+    <nav class="max-w-5xl mx-auto mb-16 flex justify-between items-center">
+        <a href="guide.html" class="bg-white/10 hover:bg-white/20 px-6 py-3 rounded-2xl text-sm font-bold transition">
+            <i class="fa-solid fa-arrow-left mr-2"></i> Back to Hub
+        </a>
+        <div class="text-right">
+            <h2 id="crop-title" class="text-3xl font-black text-green-500">Wheat Roadmap</h2>
+            <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Scientific Growth Cycle</p>
+        </div>
+    </nav>
+
+    <div id="timeline-box" class="relative timeline max-w-5xl mx-auto">
+        </div>
+
+    <script>
+        async function loadCropDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const crop = urlParams.get('crop') || 'wheat';
+
+            // Backend API call (main.py)
+            const response = await fetch(`http://127.0.0.1:8000/api/guide/${crop}`);
+            const data = await response.json();
+
+            document.getElementById('crop-title').innerText = data.name + " Roadmap";
+            
+            let html = "";
+            data.steps.forEach((step, i) => {
+                const align = i % 2 === 0 ? 'ml-auto md:ml-0' : '';
+                html += `
+                <div class="relative mb-20 flex justify-between items-center w-full">
+                    <div class="w-full md:w-5/12 step-card p-8 rounded-[32px] ${align}">
+                        <span class="${step.color} font-bold text-xs uppercase tracking-tighter">Day ${step.day}</span>
+                        <h3 class="text-2xl font-bold mt-2">${step.task}</h3>
+                        <p class="text-slate-400 text-sm mt-3 leading-relaxed">${step.desc}</p>
+                    </div>
+                    <div class="absolute left-1/2 -translate-x-1/2 w-12 h-12 bg-slate-900 border-4 border-green-500 rounded-full flex items-center justify-center z-10">
+                        <i class="fas ${step.icon} ${step.color} text-sm"></i>
+                    </div>
+                </div>`;
+            });
+            document.getElementById('timeline-box').innerHTML = html;
+        }
+        window.onload = loadCropDetails;
+    </script>
+</body>
+</html>

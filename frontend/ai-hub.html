@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop AI | Smart Ecosystem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #0f172a;
+            color: white;
+            overflow-x: hidden;
+        }
+        .connection-line {
+            position: absolute;
+            stroke: #22c55e;
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 10;
+            animation: flow 2s linear infinite;
+        }
+        @keyframes flow { to { stroke-dashoffset: -20; } }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+        .sensor-pulse {
+            width: 12px; height: 12px;
+            background: #22c55e;
+            border-radius: 50%;
+            position: absolute;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
+    </style>
+</head>
+<body class="p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="flex justify-between items-center mb-12">
+            <div>
+                <h1 class="text-4xl font-black text-green-400">Crop AI: Ecosystem</h1>
+                <p class="text-slate-400 font-bold uppercase text-xs tracking-widest mt-1">Smart Farming & Data Processing Logic</p>
+            </div>
+            <a href="index.html" class="px-6 py-3 bg-white/10 rounded-xl font-bold hover:bg-white/20 transition">Back to Dashboard</a>
+        </header>
+
+        <div class="grid grid-cols-12 gap-8 relative">
+            
+            <div class="col-span-12 lg:col-span-4 space-y-6">
+                <h3 class="text-xl font-black mb-4 flex items-center gap-2"><i class="fa-solid fa-seedling text-green-500"></i> Ground Sensors</h3>
+                
+                <div class="glass-card p-6 flex items-center gap-5">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400"><i class="fa-solid fa-droplet"></i></div>
+                    <div><p class="font-black">Soil Moisture Monitor</p><p class="text-[10px] text-slate-400 uppercase">Real-time ground data</p></div>
+                </div>
+
+                <div class="glass-card p-6 flex items-center gap-5">
+                    <div class="w-12 h-12 bg-teal-500/20 rounded-xl flex items-center justify-center text-teal-400"><i class="fa-solid fa-cloud-sun"></i></div>
+                    <div><p class="font-black">Weather Station</p><p class="text-[10px] text-slate-400 uppercase">Temp & UV Analysis</p></div>
+                </div>
+
+                <div class="glass-card p-6 flex items-center gap-5">
+                    <div class="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center text-orange-400"><i class="fa-solid fa-video"></i></div>
+                    <div><p class="font-black">AI Camera</p><p class="text-[10px] text-slate-400 uppercase">Pest & Growth Vision</p></div>
+                </div>
+            </div>
+
+            <div class="col-span-12 lg:col-span-4 flex flex-col items-center justify-center py-12">
+                <div class="relative">
+                    <i class="fa-solid fa-tower-broadcast text-9xl text-green-500 opacity-50"></i>
+                    <div class="absolute -top-4 -right-4 bg-green-500 text-black font-black text-[10px] px-3 py-1 rounded-lg">4G / 5G</div>
+                </div>
+                <div class="mt-12 text-center">
+                    <div class="p-6 glass-card inline-block">
+                        <i class="fa-solid fa-cloud text-4xl text-blue-400 mb-3"></i>
+                        <p class="font-black text-sm uppercase">Internet Cloud</p>
+                    </div>
+                </div>
+                <div class="mt-8"><i class="fa-solid fa-chevron-down animate-bounce text-2xl text-green-500"></i></div>
+            </div>
+
+            <div class="col-span-12 lg:col-span-4 space-y-8">
+                <div class="glass-card p-8 border-l-4 border-green-500">
+                    <h3 class="text-xl font-black mb-4 flex items-center gap-2"><i class="fa-solid fa-gears"></i> AI Management</h3>
+                    <p class="text-sm text-slate-400 font-bold leading-relaxed">
+                        Data from Lucknow fields is processed using <span class="text-green-400">Ensemble ML Models</span>. 
+                        It controls the Water Tank and Irrigation automatically.
+                    </p>
+                </div>
+
+                <div class="glass-card p-8 bg-green-500 text-black">
+                    <h3 class="text-xl font-black mb-4 flex items-center gap-2"><i class="fa-solid fa-mobile-screen-button"></i> Farmer Result</h3>
+                    <p class="text-sm font-bold">Results delivered to Ayush Tiwari via mobile app with voice alerts.</p>
+                </div>
+
+                <div class="p-6 glass-card border-dashed border-2 border-slate-700">
+                    <p class="text-[10px] font-black text-slate-500 uppercase mb-2">PF Balance Connection</p>
+                    <p class="text-lg font-black text-green-400">₹3,928 Available</p>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="p-6 bg-white/5 rounded-3xl"><h4 class="font-black text-green-400">Save 30% Water</h4><p class="text-xs text-slate-500 mt-2">Precision Irrigation</p></div>
+            <div class="p-6 bg-white/5 rounded-3xl"><h4 class="font-black text-green-400">Early Pest Alert</h4><p class="text-xs text-slate-500 mt-2">Computer Vision Detection</p></div>
+            <div class="p-6 bg-white/5 rounded-3xl"><h4 class="font-black text-green-400">Maximized Profit</h4><p class="text-xs text-slate-500 mt-2">Market Price Analysis</p></div>
+        </footer>
+    </div>
+
+</body>
+</html>

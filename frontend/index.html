@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vridhi | All-in-One Enterprise Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        body { font-family: 'Outfit', sans-serif; background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed; background-size: cover; }
+        .glass-panel { background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(25px) saturate(180%); border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.3); }
+        .card-inner { background: rgba(255, 255, 255, 0.45); border-radius: 32px; border: 1px solid rgba(255, 255, 255, 0.2); transition: 0.3s; }
+        .card-inner:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.6); }
+        .status-pill { padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+        
+        /* Your Login Input Styles */
+        .auth-input { width:100%; padding:14px; margin-bottom:15px; border-radius:14px; border:1px solid rgba(255,255,255,0.3); outline:none; background:rgba(0,0,0,0.4) !important; color:#fff !important; font-weight:600; }
+        .auth-input::placeholder { color: rgba(255,255,255,0.8) !important; }
+
+        /* Floating Chatbot */
+        .bot-float { position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; background: linear-gradient(135deg, #22c55e, #16a34a); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 3px solid white; transition: 0.3s; }
+        .bot-float:hover { transform: scale(1.1); }
+    </style>
+</head>
+<body class="p-4 lg:p-8 flex items-center justify-center">
+
+    <div id="auth-overlay" style="position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(10px); z-index:999; display:flex; align-items:center; justify-content:center;">
+        <div style="background:rgba(255,255,255,0.1); padding:40px; border-radius:30px; width:350px; color:white; text-align:center;">
+            <h2 style="font-weight:800; font-size:22px; margin-bottom:20px;">Farmer Login 🚜</h2>
+            <input id="userName" placeholder="Enter Name" class="auth-input">
+            <input id="phone" placeholder="Enter Phone Number" class="auth-input">
+            <button onclick="sendOTP()" style="width:100%; padding:12px; background:#22c55e; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">Send OTP</button>
+            <div id="otp-section" style="display:none; margin-top:20px;">
+                <input id="otpInput" placeholder="Enter OTP" class="auth-input">
+                <button onclick="verifyOTP()" style="width:100%; padding:12px; background:#16a34a; border:none; border-radius:12px; font-weight:bold; cursor:pointer;">Verify & Login</button>
+            </div>
+            <p id="otp-msg" style="margin-top:10px; font-size:12px;"></p>
+        </div>
+    </div>
+
+    <div class="bot-float" onclick="window.location.href='chat.html'">
+        <i class="fa-solid fa-robot text-white text-3xl"></i>
+    </div>
+
+    <div class="glass-panel w-full max-w-[1600px] h-[94vh] flex overflow-hidden shadow-2xl">
+        
+        <aside class="w-72 border-r border-white/20 p-8 flex flex-col hidden xl:flex">
+            <div class="text-3xl font-black text-green-900 mb-12 flex items-center gap-3">
+                <i class="fa-solid fa-microchip text-green-600"></i> Vridhi
+            </div>
+            <nav class="flex-1 space-y-4">
+                <a id="nav-dash" href="#" class="flex items-center gap-4 px-6 py-4 rounded-2xl bg-white/70 font-bold text-slate-800 shadow-sm"><i class="fa-solid fa-grid-2"></i> Dashboard</a>
+                <!-- SERVICES DROPDOWN -->
+<div class="relative">
+
+    <button onclick="toggleServices()" 
+    class="w-full flex items-center justify-between px-6 py-4 rounded-2xl text-slate-600 hover:bg-white/30 transition font-bold">
+
+        <div class="flex items-center gap-4">
+            <i class="fa-solid fa-layer-group"></i>
+            Services
+        </div>
+
+        <i id="arrowIcon" class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+    </button>
+
+    <!-- Dropdown -->
+    <div id="servicesMenu" 
+    class="hidden ml-6 mt-2 space-y-2 transition-all duration-300">
+
+        <a href="yield.html" 
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-600 hover:bg-white/40 transition">
+            📊 Prediction
+        </a>
+
+        <a href="irrigation.html" 
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-600 hover:bg-white/40 transition">
+            💧 Planner
+        </a>
+
+        <a href="fertilizer.html" 
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-600 hover:bg-white/40 transition">
+            🌿 Fertilizer
+        </a>
+
+        <a href="guide.html" 
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm text-slate-600 hover:bg-white/40 transition">
+            📘 Guide
+        </a>
+
+    </div>
+</div>
+                <a href="ai-hub.html" class="flex items-center gap-4 px-6 py-4 rounded-2xl text-slate-600 hover:bg-green-600 hover:text-white transition-all font-bold">
+                    <i class="fa-solid fa-brain"></i> <span>AI Precision Hub</span>
+                </a>
+                <div onclick="window.location.href='market.html'" class="bg-slate-900 text-white px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest flex items-center gap-2 shadow-xl cursor-pointer hover:bg-green-700 transition">
+                    <i class="fa-solid fa-shop"></i> Go to Market
+                </div>
+
+                <div class="pt-6">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Language / भाषा</label>
+                    <select id="langChoice" onchange="updateUI()" class="w-full bg-white/40 border-none rounded-xl px-4 py-3 text-sm font-bold outline-none backdrop-blur-md">
+                        <option value="en">English</option>
+                        <option value="hi">हिन्दी</option>
+                        <option value="bh">भोजपुरी</option>
+                        <option value="bn">বাংলা (Bengali)</option>
+                        <option value="te">తెలుగు (Telugu)</option>
+                    </select>
+                </div>
+            </nav>
+
+            <div class="mt-auto space-y-4">
+                <div class="bg-white/40 p-5 rounded-[30px] border border-white/40">
+                    <p class="text-[10px] font-black text-green-800 uppercase mb-1">Lucknow, UP</p>
+                    <p class="text-sm font-bold text-slate-800 user-name">User</p>
+                </div>
+                <button onclick="logoutUser()" class="w-full py-4 bg-red-500 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-red-600 transition shadow-lg shadow-red-200">
+                    <i class="fa-solid fa-power-off mr-2"></i> Logout
+                </button>
+            </div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-10 flex flex-col space-y-10">
+            
+            <header class="flex justify-between items-center">
+                <div class="space-y-1">
+                    <h1 id="welcome-text" class="text-4xl font-black text-slate-800 tracking-tight">Hello, <span class="user-name">User</span>! 👋</h1>
+                    <div class="flex items-center gap-2 text-slate-500 font-bold">
+                        <i class="fa-solid fa-location-dot text-green-600"></i>
+                        <span id="live-city" class="text-xs uppercase tracking-widest">Detecting Lucknow Region...</span>
+                    </div>
+                </div>
+                <div class="bg-white/30 p-2 pr-8 rounded-[30px] border border-white/40 flex items-center gap-4">
+                    <img src="https://i.pravatar.cc/150?u=ayush" class="w-12 h-12 rounded-2xl border-4 border-white shadow-sm">
+                    <div class="text-left"><p class="text-sm font-black text-slate-800 user-name">User</p></div>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-12 gap-8">
+                <div class="col-span-12 xl:col-span-8 card-inner p-10 flex flex-col justify-between min-h-[350px] relative overflow-hidden">
+                    <div class="flex justify-between items-start z-10">
+                        <div>
+                            <span id="badge-live" class="bg-green-600 text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase animate-pulse">Live Forecast</span>
+                            <h2 class="text-3xl font-black mt-4 text-slate-800" id="weather-city">Lucknow, IN</h2>
+                        </div>
+                        <i class="fa-solid fa-cloud-sun text-8xl text-yellow-500 opacity-80"></i>
+                    </div>
+                    <div class="flex items-end justify-between z-10">
+                        <div class="flex items-end gap-5">
+                            <h2 class="text-9xl font-black tracking-tighter text-slate-800" id="temp-display">--°C</h2>
+                            <div class="mb-6 space-y-2">
+                                <p class="text-slate-500 font-black uppercase text-xs flex items-center gap-2">
+                                    <i class="fa-solid fa-droplet text-blue-500"></i> Humidity: <span id="hum-display">--</span>%
+                                </p>
+                                <p class="text-slate-500 font-black uppercase text-xs flex items-center gap-2">
+                                    <i class="fa-solid fa-wind text-green-500"></i> Wind: 6 M/S
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-right pb-4">
+                            <p class="text-xl font-bold text-slate-700">Partly Cloudy</p>
+                            <p class="text-xs text-slate-400 font-black uppercase">Optimal for Irrigation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-12 xl:col-span-4 card-inner p-6 relative overflow-hidden">
+
+    <div class="absolute top-0 right-0 w-32 h-32 bg-green-400/20 blur-3xl"></div>
+
+    <h3 class="text-xl font-black mb-4">📊 Live Price Trend</h3>
+
+    <canvas id="miniChart" height="150"></canvas>
+
+    <p class="text-xs mt-4 text-slate-500 font-bold">
+        📈 Weekly growth detected
+    </p>
+
+</div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-8">
+                <div class="col-span-12 lg:col-span-7 card-inner p-10 border-t-8 border-green-500">
+
+    <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-black text-slate-800">
+            📈 Market Price Forecast
+        </h3>
+
+        <select id="cropSelect" onchange="updateChart()" 
+        class="px-4 py-2 rounded-xl bg-white/50 font-bold outline-none">
+            <option value="wheat">Wheat</option>
+            <option value="rice">Rice</option>
+            <option value="mustard">Mustard</option>
+        </select>
+    </div>
+
+    <canvas id="marketChart" height="120"></canvas>
+
+    <div class="mt-6 text-sm text-slate-600 font-bold">
+        🔍 AI Prediction: Prices expected to rise in coming weeks due to demand.
+    </div>
+
+</div>
+
+                <div class="col-span-12 lg:col-span-5 card-inner p-10 bg-black text-white shadow-2xl" >
+                    <h3 id="label-todo" class="text-2xl font-black mb-10 flex items-center gap-4">
+                        <i class="fa-solid fa-lightbulb text-yellow-400"></i> What should I do?
+                    </h3>
+                    <div class="space-y-8">
+                        <div class="flex gap-6 items-start">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 border border-blue-500/40">
+                                <i class="fa-solid fa-faucet-drip"></i>
+                            </div>
+                            <div>
+                                <p class="font-black text-lg">Increase Irrigation</p>
+                                <p class="text-slate-400 text-xs">Humidity is low in Lucknow. Water fields tomorrow.</p>
+                            </div>
+                        </div>
+                        <button id="btn-voice" onclick="speakResult()" class="w-full py-5 bg-white text-slate-900 font-black rounded-[25px] uppercase tracking-widest text-xs mt-6 transition hover:bg-green-500 hover:text-white">
+                            Bol ke batao 🎤
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-8">
+                <div class="col-span-12 lg:col-span-8 card-inner p-10">
+                    <h3 class="text-2xl font-black mb-8">Agriculture News</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-6 bg-white/40 rounded-3xl border"><p class="font-bold text-slate-800">Govt subsidy on solar pumps in UP</p></div>
+                        <div class="p-6 bg-white/40 rounded-3xl border"><p class="font-bold text-slate-800">Wheat prices rising in local Mandi</p></div>
+                    </div>
+                </div>
+                <div class="col-span-12 lg:col-span-4 card-inner p-10 bg-gradient-to-br from-white to-green-50/30">
+                    <h3 class="text-xl font-black mb-6">Krishi Ledger</h3>
+                    <div class="space-y-4 font-bold text-sm">
+                        <div class="flex justify-between p-4 bg-white rounded-2xl border"><span>PF Balance</span><span>₹3,928</span></div>
+                        <div class="flex justify-between p-4 bg-white rounded-2xl border"><span>Axis Platinum</span><span>Active</span></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+function toggleServices() {
+    const menu = document.getElementById("servicesMenu");
+    const arrow = document.getElementById("arrowIcon");
+
+    if (menu.classList.contains("hidden")) {
+        menu.classList.remove("hidden");
+        arrow.style.transform = "rotate(180deg)";
+    } else {
+        menu.classList.add("hidden");
+        arrow.style.transform = "rotate(0deg)";
+    }
+}
+</script>
+
+    <script>
+        // Existing Functionality
+        function setUserName(name) {
+            localStorage.setItem("userName", name);
+            document.querySelectorAll(".user-name").forEach(el => { el.innerText = name; });
+        }
+
+        const trans = {
+            en: { welcome: "Hello", res: "Smart Analysis Result", why: "Why this result?", yield: "Estimated Yield", profit: "Expected Profit", risk: "Risk Level", todo: "What should I do?", voice: "Bol ke batao 🎤", speak: "Analysis complete. Yield is 25 quintal. expected profit 45,000 rupees." },
+            hi: { welcome: "नमस्ते", res: "स्मार्ट विश्लेषण परिणाम", why: "यह परिणाम क्यों?", yield: "अनुमानित उपज", profit: "अपेक्षित लाभ", risk: "जोखिम स्तर", todo: "मुझे क्या करना चाहिए?", voice: "बोल के बताओ 🎤", speak: "जांच पूरा भइल।" },
+            bh: { welcome: "प्रणाम", res: "स्मार्ट जांच के नतीजा", why: "ई नतीजा काहे आइल?", yield: "अंदाजन पैदावार", profit: "मुनाफ़ा", risk: "रिस्क लेवल", todo: "अब का करे के चाहीं?", voice: "बोल के बतावल जाई 🎤", speak: "प्रणाम आयुष भाई।" },
+            bn: { welcome: "হ্যালো", res: "স্মার্ট বিশ্লেষণ ফলাফল", todo: "আমার কী করা উচিত?", voice: "মুখে বলুন 🎤", speak: "বিশ্লেষণ সম্পন্ন হয়েছে।" },
+            te: { welcome: "నమస్కారం", res: "స్మార్ట్ విశ్లేషణ ఫలితం", todo: "నేను ఏమి చేయాలి?", voice: "చెప్పండి 🎤", speak: "విశ్లేషణ పూర్తయింది." }
+        };
+
+        function updateUI() {
+            const lang = document.getElementById('langChoice').value;
+            const d = trans[lang] || trans['en'];
+            const name = localStorage.getItem("userName") || "User";
+            document.getElementById('welcome-text').innerText = `${d.welcome}, ${name}! 👋`;
+            document.getElementById('label-res').innerText = d.res;
+            document.getElementById('btn-voice').innerText = d.voice;
+        }
+
+        function speakResult() {
+            const lang = document.getElementById('langChoice').value;
+            const msg = new SpeechSynthesisUtterance(trans[lang].speak);
+            msg.lang = (lang === 'en') ? 'en-IN' : 'hi-IN';
+            window.speechSynthesis.speak(msg);
+        }
+
+        let generatedOTP = "";
+        function sendOTP() {
+            const phone = document.getElementById("phone").value;
+            if (phone.length < 10) { alert("Valid number daalo"); return; }
+            generatedOTP = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById("otp-section").style.display = "block";
+            document.getElementById("otp-msg").innerText = "Demo OTP: " + generatedOTP;
+        }
+
+        function verifyOTP() {
+            const entered = document.getElementById("otpInput").value;
+            const name = document.getElementById("userName").value;
+            if (entered == generatedOTP) {
+                setUserName(name);
+                document.getElementById("auth-overlay").style.display = "none";
+                updateUI();
+            } else { alert("Wrong OTP ❌"); }
+        }
+
+        function logoutUser() {
+            localStorage.removeItem("userName");
+            document.getElementById("auth-overlay").style.display = "flex";
+        }
+
+        async function init() {
+            const savedUser = localStorage.getItem("userName");
+            if (savedUser) {
+                setUserName(savedUser);
+                document.getElementById("auth-overlay").style.display = "none";
+            }
+            // Weather API fetch logic kept
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                const lat = pos.coords.latitude; const lon = pos.coords.longitude;
+                try {
+                    const res = await fetch(`http://127.0.0.1:8000/api/weather?lat=${lat}&lon=${lon}`);
+                    const data = await res.json();
+                    document.getElementById('temp-display').innerText = Math.round(data.temperature) + "°C";
+                    document.getElementById('hum-display').innerText = data.humidity;
+                } catch (e) { console.error("API Error"); }
+            });
+            updateUI();
+        }
+        window.onload = init;
+    </script>
+    <script>
+let chart;
+
+const cropData = {
+    wheat: [2200, 2300, 2400, 2450, 2600],
+    rice: [1800, 1900, 2000, 2100, 2200],
+    mustard: [4800, 4900, 5000, 5100, 5300]
+};
+
+function createChart(data) {
+    const ctx = document.getElementById('marketChart').getContext('2d');
+
+    if (chart) chart.destroy();
+
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Week 1", "Week 2", "Week 3", "Week 4", "Prediction"],
+            datasets: [{
+                label: "Price (₹/q)",
+                data: data,
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                backgroundColor: "rgba(34,197,94,0.2)",
+borderColor: "#22c55e",
+pointBackgroundColor: "#16a34a",
+pointRadius: 5,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            }
+        }
+    });
+}
+
+function updateChart() {
+    const crop = document.getElementById("cropSelect").value;
+    createChart(cropData[crop]);
+}
+
+// Initial load
+setTimeout(() => {
+    createChart(cropData["wheat"]);
+}, 500);
+
+
+new Chart(document.getElementById('miniChart'), {
+    type: 'line',
+    data: {
+        labels: ["Mon","Tue","Wed","Thu","Fri"],
+        datasets: [{
+            data: [2200, 2300, 2400, 2450, 2600],
+            borderWidth: 2,
+            tension: 0.4
+        }]
+    }
+});
+</script>
+</body>
+</html>

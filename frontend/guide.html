@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vridhi | Farming Guide Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 40px;
+        }
+
+        .crop-card {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .crop-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.6);
+            border-color: #22c55e;
+        }
+
+        .sidebar-active {
+            background: white !important;
+            font-weight: 800;
+            color: #1e293b !important;
+        }
+
+        .badge {
+            background: rgba(34, 197, 94, 0.2);
+            color: #166534;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="p-4 lg:p-8 flex items-center justify-center">
+
+    <div class="glass-panel w-full max-w-[1500px] h-[92vh] flex overflow-hidden shadow-2xl">
+        
+        <aside class="w-72 border-r border-white/20 p-8 flex flex-col hidden xl:flex">
+            <div class="text-3xl font-black text-green-900 mb-12 flex items-center gap-3">
+                <i class="fa-solid fa-seedling text-green-600"></i> Vridhi
+            </div>
+            
+            <nav class="flex-1 space-y-4">
+                <a href="index.html" class="flex items-center gap-4 px-6 py-4 rounded-2xl text-slate-600 hover:bg-white/30 transition">
+                    <i class="fa-solid fa-grid-2"></i> Dashboard
+                </a>
+                <a href="#" class="sidebar-active flex items-center gap-4 px-6 py-4 rounded-2xl text-slate-800">
+                    <i class="fa-solid fa-book-open"></i> Farming Guide
+                </a>
+                <a href="yield.html" class="flex items-center gap-4 px-6 py-4 rounded-2xl text-slate-600 hover:bg-white/30 transition">
+                    <i class="fa-solid fa-chart-line"></i> Prediction
+                </a>
+            </nav>
+
+            <div class="mt-auto bg-white/40 p-5 rounded-[30px] border border-white/40">
+                <p class="text-[10px] font-black text-green-800 uppercase mb-1">Lucknow, UP</p>
+                <p class="text-sm font-bold text-slate-800">Ayush Tiwari</p> <p class="text-[10px] text-green-700 font-black">PF: ₹3,928</p> </div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-10 flex flex-col">
+            
+            <header class="flex justify-between items-center mb-12">
+                <div>
+                    <h1 class="text-4xl font-black text-slate-800 tracking-tight">Farming Knowledge Hub</h1>
+                    <p class="text-slate-500 font-bold mt-1 uppercase text-xs tracking-widest">Scientific Guidance for Lucknow's Climate</p>
+                </div>
+                <div class="flex items-center gap-4 bg-white/30 px-6 py-3 rounded-2xl border border-white/20">
+                    <i class="fa-solid fa-calendar-days text-green-600"></i>
+                    <span class="text-sm font-bold text-slate-700">Feb - March Season</span>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                
+                <a href="crop-details.html?crop=wheat" class="crop-card group">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-4 left-4 badge bg-white/80">Rabi Season</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-black text-slate-800">Wheat (Gehu)</h3>
+                        <p class="text-slate-500 text-sm mt-2 font-medium leading-relaxed">Essential winter crop for North India. High yield potential in Lucknow's current temperature.</p>
+                        <div class="mt-6 flex items-center justify-between">
+                            <span class="text-[10px] font-black text-green-700 uppercase">Most Recommended</span>
+                            <i class="fa-solid fa-arrow-right-long text-green-600"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="crop-details.html?crop=mustard" class="crop-card group">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1594667035912-337d99195293?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-4 left-4 badge bg-yellow-100/80">High Profit</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-black text-slate-800">Mustard (Sarson)</h3>
+                        <p class="text-slate-500 text-sm mt-2 font-medium leading-relaxed">Optimal growth in February. Low water requirement compared to other rabi crops.</p>
+                        <div class="mt-6 flex items-center justify-between">
+                            <span class="text-[10px] font-black text-yellow-700 uppercase">Cash Crop</span>
+                            <i class="fa-solid fa-arrow-right-long text-yellow-600"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="crop-details.html?crop=maize" class="crop-card group">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-4 left-4 badge bg-orange-100/80">Zaid Preparation</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-black text-slate-800">Maize (Makka)</h3>
+                        <p class="text-slate-500 text-sm mt-2 font-medium leading-relaxed">Start preparing for Zaid season. Excellent alternative for diversified income.</p>
+                        <div class="mt-6 flex items-center justify-between">
+                            <span class="text-[10px] font-black text-orange-700 uppercase">Sustainable</span>
+                            <i class="fa-solid fa-arrow-right-long text-orange-600"></i>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+
+            <div class="mt-12 bg-slate-900/10 p-8 rounded-[40px] border border-white/40 backdrop-blur-md">
+                <div class="flex items-center gap-6">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl shadow-xl">
+                        <i class="fa-solid fa-lightbulb text-yellow-500"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-black text-slate-800">Lucknow Special Alert</h4> <p class="text-sm font-bold text-slate-600">Current humidity is 42%. It is the best time for pest monitoring in Wheat crops.</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>
