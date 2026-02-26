@@ -1,6 +1,9 @@
-from fastapi import FastAPI
+﻿from fastapi import FastAPI
 import requests
 from fastapi.middleware.cors import CORSMiddleware
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
 from utils import get_weather  #
 
 app = FastAPI()
