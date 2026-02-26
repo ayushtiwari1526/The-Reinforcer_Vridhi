@@ -2,6 +2,10 @@
 import requests
 from fastapi.middleware.cors import CORSMiddleware
 from backend.utils import get_weather 
+import sys
+import os
+
+
 
 app = FastAPI()
 
