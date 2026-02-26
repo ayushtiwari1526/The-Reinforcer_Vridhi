@@ -124,7 +124,7 @@
 
             try {
                 // Connecting to your FastAPI Backend
-                let res = await fetch("http://127.0.0.1:8000/chat?q=" + encodeURIComponent(msg));
+                let res = await fetch("https://the-reinforcer-vridhi.onrender.com/chat?q=" + encodeURIComponent(msg));
                 let data = await res.json();
 
                 document.getElementById(typingId).remove();

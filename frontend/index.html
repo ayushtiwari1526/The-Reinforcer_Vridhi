@@ -324,7 +324,7 @@ function toggleServices() {
             navigator.geolocation.getCurrentPosition(async (pos) => {
                 const lat = pos.coords.latitude; const lon = pos.coords.longitude;
                 try {
-                    const res = await fetch(`http://127.0.0.1:8000/api/weather?lat=${lat}&lon=${lon}`);
+                    const res = await fetch("https://the-reinforcer-vridhi.onrender.com/api/dashboard?lat=26.84&lon=80.94");
                     const data = await res.json();
                     document.getElementById('temp-display').innerText = Math.round(data.temperature) + "°C";
                     document.getElementById('hum-display').innerText = data.humidity;
