@@ -1,7 +1,7 @@
 ﻿from fastapi import FastAPI
 import requests
 from fastapi.middleware.cors import CORSMiddleware
-from utils import get_weather 
+from backend.utils import get_weather 
 import sys
 import os
 

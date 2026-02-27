@@ -326,8 +326,11 @@ function toggleServices() {
                 try {
                     const res = await fetch("https://the-reinforcer-vridhi.onrender.com/api/dashboard?lat=26.84&lon=80.94");
                     const data = await res.json();
-                    document.getElementById('temp-display').innerText = Math.round(data.temperature) + "°C";
-                    document.getElementById('hum-display').innerText = data.humidity;
+                    // document.getElementById('temp-display').innerText = Math.round(data.temperature) + "°C";
+                    // document.getElementById('hum-display').innerText = data.humidity;
+
+                    document.getElementById('temp-display').innerText = Math.round(data.weather.temperature) + "°C";
+                    document.getElementById('hum-display').innerText = data.weather.humidity;
                 } catch (e) { console.error("API Error"); }
             });
             updateUI();
